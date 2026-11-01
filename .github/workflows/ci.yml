@@ -21,4 +21,6 @@ jobs:
           assert os.path.isfile("Source/Lucida/ThirdParty/include/lucida/lucida.hpp"), "vendored C++ core is missing"
           PY
       - name: Compile the vendored core (no exceptions, no RTTI)
-        run: clang++ -std=c++17 -fsyntax-only -Wall -Wextra -Werror -fno-exceptions -fno-rtti -x c++ Source/Lucida/ThirdParty/include/lucida/lucida.hpp
+        run: |
+          echo '#include "lucida/lucida.hpp"' > /tmp/check.cpp
+          clang++ -std=c++17 -fsyntax-only -Wall -Wextra -Werror -fno-exceptions -fno-rtti -ISource/Lucida/ThirdParty/include /tmp/check.cpp
