@@ -1,0 +1,18 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1.0",
+  "FriendlyName": "Lucida",
+  "Description": "Lucida product analytics: consent-gated events, batched delivery with retry, uuid v7 dedupe.",
+  "Category": "Analytics",
+  "CreatedBy": "Lucida",
+  "CanContainContent": false,
+  "Installed": false,
+  "Modules": [
+    {
+      "Name": "Lucida",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ]
+}

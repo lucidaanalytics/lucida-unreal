@@ -1,0 +1,24 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Unreal Engine cannot be installed on free runners (Epic licence, ~50 GB). The plugin wraps the engine-free
+      # header-only C++ core, so this validates the .uplugin manifest and compiles that core the way Unreal does.
+      - name: Plugin manifest
+        run: |
+          python3 - <<'PY'
+          import json, os
+          p = json.load(open("Lucida.uplugin"))
+          assert p["VersionName"] and p["Modules"], "Lucida.uplugin needs VersionName and Modules"
+          assert os.path.isfile("Source/Lucida/ThirdParty/include/lucida/lucida.hpp"), "vendored C++ core is missing"
+          PY
+      - name: Compile the vendored core (no exceptions, no RTTI)
+        run: clang++ -std=c++17 -fsyntax-only -Wall -Wextra -Werror -fno-exceptions -fno-rtti -x c++ Source/Lucida/ThirdParty/include/lucida/lucida.hpp
