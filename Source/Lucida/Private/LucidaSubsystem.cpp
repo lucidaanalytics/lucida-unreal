@@ -11,7 +11,10 @@
 #include "Misc/ConfigCacheIni.h"
 #include "Misc/CoreDelegates.h"
 #include "Modules/ModuleManager.h"
+// The core is third-party code to UnrealBuildTool: keep the engine's warnings-as-errors (shadowing etc.) off it.
+THIRD_PARTY_INCLUDES_START
 #include "lucida/lucida.hpp"
+THIRD_PARTY_INCLUDES_END
 
 IMPLEMENT_MODULE(FDefaultModuleImpl, Lucida)
 
